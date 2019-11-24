@@ -8,9 +8,10 @@ import com.example.popular_movies_app.R
 import com.example.popular_movies_app.model.MovieAdapter
 import com.example.popular_movies_app.model.MovieItem
 import com.example.popular_movies_app.model.MovieRepository
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-
+import kotlinx.android.synthetic.main.movie_item.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,34 +25,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbarMain)
-        btnSubmit.setOnClickListener{
-            val yearInput = editText.text.toString()
-            movieRepository.fetchApi(yearInput)
-        }
-
         initViews()
         initViewModel()
     }
 
-
     private fun initViews() {
-        supportActionBar?.title = "Movie List"
         rvMovies.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         rvMovies.adapter = movieAdapter
-
+        btnSubmit.setOnClickListener{
+            val yearInput = editText.text.toString()
+            movieRepository.fetchApi(yearInput)
+        }
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        viewModel.movieItems.observe(this, Observer {
-            movies.clear()
-            movies.addAll(it)
+        viewModel.movieItems.observe(this, Observer { movieItem ->
+            this.movies.clear()
+            this.movies.addAll(movieItem)
             movieAdapter.notifyDataSetChanged()
         })
     }
 
     private fun onMovieClick(movieItem: MovieItem) {
-
+        Snackbar.make(rvMovies, "This movie is: ${movieItem.releaseDate}", Snackbar.LENGTH_LONG).show()
     }
 }
 
