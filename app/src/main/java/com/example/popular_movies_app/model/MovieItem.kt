@@ -1,7 +1,7 @@
 package com.example.popular_movies_app.model
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
+import java.time.LocalDate
 
 data class MovieItem (
     @SerializedName("title")var title: String,
@@ -9,7 +9,7 @@ data class MovieItem (
     @SerializedName("content")var content: String,
     @SerializedName("cover")var cover: String,
     @SerializedName("background")var background: String,
-    @SerializedName("releaseDate")var releaseDate: Date,
+    @SerializedName("releaseDate")var releaseDate: LocalDate,
     @SerializedName("rating")var rating: Double
     ) {
 

@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbarMain)
-        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-
         btnSubmit.setOnClickListener{
             val yearInput = editText.text.toString()
             movieRepository.fetchApi(yearInput)
