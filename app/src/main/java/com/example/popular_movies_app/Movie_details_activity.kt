@@ -18,5 +18,7 @@ class Movie_details_activity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
     }
-
+    companion object {
+        const val MOVIE_EXTRA = "MOVIE_EXTRA"
+    }
 }
