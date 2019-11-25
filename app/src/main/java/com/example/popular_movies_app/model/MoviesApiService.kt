@@ -2,10 +2,13 @@ package com.example.popular_movies_app.model
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MoviesApiService {
 
-    // The GET method needed to retrieve a random number trivia.
-    @GET("/random/trivia?json")
-    fun getMovieItems(): Call<List<MovieItem>>
+    // The GET method needs to retrieve the movies published in the given year
+    @GET("movie?api_key=f896fbd8b02afe7da46fd7cdac552d39&language=en-US&sort_by=popularity.desc&year=")
+    fun getMovieItems(@Query("year") year: String): Call<List<MovieItem>>
 }
+

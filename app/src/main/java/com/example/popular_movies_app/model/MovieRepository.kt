@@ -8,6 +8,7 @@ import java.util.concurrent.Executors
 
 class MovieRepository {
 
+    private val moviesApi: MoviesApiService = MoviesApi.createApi()
     private val movieItemsFromApi = ArrayList<MovieItem>()
 
     fun fetchApi(year: String) {
@@ -31,12 +32,14 @@ class MovieRepository {
             "https://api.themoviedb.org/3/discover/movie?api_key=f896fbd8b02afe7da46fd7cdac552d39&language=en-US&sort_by=popularity.desc&year=$year"
 
         inner class Response(json: String) : JSONObject(json) {
+            var date = LocalDate.parse("2018-12-12")
+            val foo = MovieItem("", 2019, "", "", "", date, 2.6)
             val response = this.optJSONArray("results")
                 ?.let { 0.until(it.length()).map { i -> it.optJSONObject(i) } } // returns an array of JSONObject
+
+
         }
 
-    fun getMovieItems(): List<MovieItem> {
-        return movieItemsFromApi
-    }
+    fun getMovieItems(year: String) = moviesApi.getMovieItems(year)
 }
 

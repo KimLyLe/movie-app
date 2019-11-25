@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private val movies = arrayListOf<MovieItem>()
     private val movieAdapter = MovieAdapter(movies) { movieItem -> onMovieClick(movieItem) }
     private lateinit var viewModel: MainActivityViewModel
-    private val movieRepository = MovieRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +33,13 @@ class MainActivity : AppCompatActivity() {
         rvMovies.adapter = movieAdapter
         btnSubmit.setOnClickListener{
             val yearInput = editText.text.toString()
-            movieRepository.fetchApi(yearInput)
+            viewModel.getMovieList(yearInput)
         }
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        viewModel.movieItems.observe(this, Observer { movieItem ->
+        viewModel.movie.observe(this, Observer { movieItem ->
             this.movies.clear()
             this.movies.addAll(movieItem)
             movieAdapter.notifyDataSetChanged()

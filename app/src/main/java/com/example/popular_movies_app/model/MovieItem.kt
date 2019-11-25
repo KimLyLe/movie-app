@@ -5,13 +5,15 @@ import java.time.LocalDate
 
 data class MovieItem (
     @SerializedName("title")var title: String,
-    @SerializedName("title")var year: Int,
+    @SerializedName("year")var year: Int,
     @SerializedName("content")var content: String,
     @SerializedName("cover")var cover: String,
     @SerializedName("background")var background: String,
     @SerializedName("releaseDate")var releaseDate: LocalDate,
     @SerializedName("rating")var rating: Double
     ) {
+
+
 
     fun getCoverForMovie() =
         "https://image.tmdb.org/t/p/w500/$cover"
