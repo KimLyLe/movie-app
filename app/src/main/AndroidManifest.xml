@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Movie_details_activity"
+            android:name=".ui.Movie_details_activity"
             android:label="@string/title_activity_movie_details_activity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity

@@ -1,18 +1,20 @@
 package com.example.popular_movies_app.ui
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.popular_movies_app.model.MovieItem
+import com.example.popular_movies_app.model.MovieList
 import com.example.popular_movies_app.model.MovieRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class MainActivityViewModel : ViewModel(){
+class MainActivityViewModel(application: Application) : AndroidViewModel(application){
 
     private val movieRepository = MovieRepository()
-    val movie = MutableLiveData<List<MovieItem>>()
+    val movie = MutableLiveData<MovieList>()
     val error = MutableLiveData<String>()
 
     /**
@@ -20,17 +22,13 @@ class MainActivityViewModel : ViewModel(){
      * onResponse if the response is successful populate the [trivia] object.
      * If the call encountered an error then populate the [error] object.
      */
-    fun getMovieList(year: String) {
-        movieRepository.getMovieItems(year).enqueue(object : Callback<List<MovieItem>> {
-            override fun onResponse(call: Call<List<MovieItem>>, response: Response<List<MovieItem>>) {
-                if (response.isSuccessful) {
-                    var foo = response.body()
-                    println("Response $foo")
-                }
+    fun getMovieList(year: Int) {
+        movieRepository.getMovieItems(year).enqueue(object : Callback<MovieList> {
+            override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) =
+                if (response.isSuccessful) movie.value = response.body()
                 else error.value = "An error occurred: ${response.errorBody().toString()}"
-            }
 
-            override fun onFailure(call: Call<List<MovieItem>>, t: Throwable) {
+            override fun onFailure(call: Call<MovieList>, t: Throwable) {
                 error.value = t.message
             }
         })
