@@ -32,8 +32,8 @@ class MovieAdapter(private val movies: List<MovieItem>, private val onClick: (Mo
         }
 
         fun bind(movieItem: MovieItem) {
-            Glide.with(context).load(movieItem.getCoverForMovie()).into(itemView.ivMovieCover)
-            itemView.tvNumber.text = movieItem.title
+            Glide.with(context).load(MoviesApi.imageUrl + movieItem.cover).into(itemView.ivMovieCover)
+            itemView.tvNumber.text = "${adapterPosition + 1}."
         }
     }
 

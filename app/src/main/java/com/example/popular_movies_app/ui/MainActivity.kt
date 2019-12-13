@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.popular_movies_app.R
 import com.example.popular_movies_app.model.MovieAdapter
 import com.example.popular_movies_app.model.MovieItem
@@ -16,7 +15,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity() {
 
     private val movies = arrayListOf<MovieItem>()
-    private val movieAdapter = MovieAdapter(movies) { onMovieClick() }
+    private val movieAdapter = MovieAdapter(movies, onClick = {onMovieClick(it)})
     private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,13 +39,16 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         viewModel.movie.observe(this, Observer {
             movies.clear()
-            movies.addAll(viewModel.movie.value!!.resultsList)
+            movies.addAll(it)
             movieAdapter.notifyDataSetChanged()
         })
     }
 
-    private fun onMovieClick() {
+    private fun onMovieClick(movieItem: MovieItem) {
         val intent = Intent(this, Movie_details_activity::class.java)
+        val bundle = Bundle()
+        bundle.putParcelable("MovieItem", movieItem)
+        intent.putExtras(bundle)
         startActivity(intent)
     }
 }

@@ -60,7 +60,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        tools:srcCompat="@drawable/ic_star_green_24dp" />
 
     <TextView
         android:id="@+id/tvRating"
