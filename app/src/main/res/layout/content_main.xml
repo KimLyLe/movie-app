@@ -12,7 +12,7 @@
         android:id="@+id/tvSearchRow"
         android:layout_width="184dp"
         android:layout_height="21dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="28dp"
         android:text="@string/tvSearchRow"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,27 +22,26 @@
         android:id="@+id/editText"
         android:layout_width="62dp"
         android:layout_height="47dp"
-        android:layout_marginStart="216dp"
-        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/rvMovies"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvSearchRow"
+        app:layout_constraintStart_toEndOf="@+id/tvSearchRow"
+        app:layout_constraintTop_toTopOf="@+id/tvSearchRow" />
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="70dp"
         android:layout_height="41dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="13dp"
         android:background="@color/colorPrimaryDark"
         android:text="@string/btnSubmit"
         android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/editText"
         app:layout_constraintEnd_toEndOf="@+id/rvMovies"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/editText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovies"
@@ -52,6 +51,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSearchRow" />
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
