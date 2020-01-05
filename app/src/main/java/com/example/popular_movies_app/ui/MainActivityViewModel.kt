@@ -17,6 +17,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val movieRepository = MovieRepository()
     val movie = MutableLiveData<List<MovieItem>>()
     val error = MutableLiveData<String>()
+    var isLoading = MutableLiveData<Boolean>(false)
 
     /**
      * Get a random number trivia from the repository using Retrofit.
@@ -24,13 +25,17 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
      * If the call encountered an error then populate the [error] object.
      */
     fun getMovieList(year: Int) {
+        isLoading.value = true
         movieRepository.getMovieItems(year).enqueue(object : Callback<MovieList> {
-            override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) =
+            override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
+                isLoading.value = false
                 if (response.isSuccessful) movie.value = response.body()?.resultsList
                 else error.value = "An error occurred: ${response.errorBody().toString()}"
+            }
 
             override fun onFailure(call: Call<MovieList>, t: Throwable) {
                 error.value = t.message
+                isLoading.value = false
             }
         })
     }

@@ -1,6 +1,8 @@
 package com.example.popular_movies_app.ui
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     private val movies = arrayListOf<MovieItem>()
     private val movieAdapter = MovieAdapter(movies, onClick = {onMovieClick(it)})
     private lateinit var viewModel: MainActivityViewModel
+    private lateinit var progressBar: ProgressBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,10 @@ class MainActivity : AppCompatActivity() {
             val yearInput = Integer.parseInt(editText.text.toString())
             viewModel.getMovieList(yearInput)
         }
+        progressBar = ProgressBar(this)
+        val layoutParameters = RelativeLayout.LayoutParams(100, 100)
+        layoutParameters.addRule(RelativeLayout.CENTER_IN_PARENT)
+        content_main.addView(progressBar, layoutParameters)
         rvMovies.layoutManager = GridLayoutManager(this,2)
         rvMovies.adapter = movieAdapter
     }
@@ -41,6 +49,14 @@ class MainActivity : AppCompatActivity() {
             movies.clear()
             movies.addAll(it)
             movieAdapter.notifyDataSetChanged()
+        })
+
+        viewModel.isLoading.observe(this, Observer {
+            if (it) {
+                progressBar.visibility = ProgressBar.VISIBLE
+            } else {
+                progressBar.visibility = ProgressBar.GONE
+            }
         })
     }
 
