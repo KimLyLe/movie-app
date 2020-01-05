@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.getMovieList(yearInput)
         }
         progressBar = ProgressBar(this)
-        val layoutParameters = RelativeLayout.LayoutParams(100, 100)
+        val layoutParameters = RelativeLayout.LayoutParams(200, 200)
         layoutParameters.addRule(RelativeLayout.CENTER_IN_PARENT)
         content_main.addView(progressBar, layoutParameters)
         rvMovies.layoutManager = GridLayoutManager(this,2)
